@@ -20,7 +20,35 @@ def req_form():
         \n: """
             )), blank_space)
     election_date = input("Termin konani voleb: ") or blank_space
+    delivery_dict = {1: f"""[x] převezmu osobně  
+                     \n[ ] převezme osoba, která se prokáže plnou mocí s mým úředně ověřeným podpisem
+                     \n[ ] žádám zaslat na adresu místa trvalého pobytu 
+                     \n[ ] žádám zaslat na jinou adresu: {blank_space}""",
+                     2: f"""[ ] převezmu osobně 
+                     \n[x] převezme osoba, která se prokáže plnou mocí s mým úředně ověřeným podpisem
+                     \n[ ] žádám zaslat na adresu místa trvalého pobytu
+                     \n[ ] žádám zaslat na jinou adresu: {blank_space}""",
+                     3: f"""[ ] převezmu osobně 
+                     \n[ ] převezme osoba, která se prokáže plnou mocí s mým úředně ověřeným podpisem
+                     \n[x] žádám zaslat na adresu místa trvalého pobytu
+                     \n[ ] žádám zaslat na jinou adresu: {blank_space}""",
+                     4: f"""[ ] převezmu osobně 
+                     \n[ ] převezme osoba, která se prokáže plnou mocí s mým úředně ověřeným podpisem
+                     \n[ ] žádám zaslat na adresu místa trvalého pobytu
+                     \n[x] žádám zaslat na jinou adresu: """
 
+                     }
+    delivery_type = delivery_dict.get(int(input(
+        """Jakym zpusobem ma byt prukaz dorucen?
+        \n[1] převezmu osobně
+        \n[2] převezme jiná osoba s plnou mocí
+        \n[3] žádám doručit na trvalou adresu
+        \n[4] žádám doručit na jinou adresu""")),
+        f"""[ ] převezmu osobně 
+        \n[ ] převezme osoba, která se prokáže plnou mocí s mým úředně ověřeným podpisem
+        \n[ ] žádám zaslat na adresu místa trvalého pobytu
+        \n[ ] žádám zaslat na jinou adresu: {blank_space}"""
+        )
 
     req_text = f"""Obecní úřad 
                \n{office} 
@@ -29,13 +57,14 @@ def req_form():
                \n 
                \nŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
                \n
-               \npro hlasovaní ve {election_type} ve dnech {election_date} 
+               \npro hlasovaní ve {election_type} ve dnech {election_date}, neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a). 
                \n 
                \n 
-               \nJméno a příjmení ždatele
+               \nJméno a příjmení žadatele
                \n(voliče):                  {full_name} 
                \nDatum narození:            {birth_date} 
-               \nTrvalý pobyt:              {addr_of_res}"""
+               \nTrvalý pobyt:              {addr_of_res}
+               \nK tomu sděluji, že voličský průkaz:\n{delivery_type}"""
 
     try:
         with open("Zadost.txt", "w") as req:
