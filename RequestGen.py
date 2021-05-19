@@ -330,7 +330,6 @@ def req_form():
     print(f"Zadost byla uspesne ulozena v {cwdir} !")
     sys.exit()
 
-
 try:
     blank_form()
 
