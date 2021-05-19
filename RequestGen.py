@@ -1,6 +1,11 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import time
+# generovat prazdny formular parametrem(?)
+import argparse
+
 
 cwdir = os.getcwd()
 blank_space = "_"*20
@@ -11,20 +16,22 @@ delivery_blank = f"""
                     [ ] žádám zaslat na jinou adresu: {blank_space}"""
 
 def election_type():
-    election_type_dict = {"1": "Volbách do Poslanecké sněmovny Parlamentu ČR",
-                          "2": "Volbách do Senátu Parlamentu ČR",
-                          "3": "Volbách do krajských zastupitelstev",
-                          "4": "Volbách do Evropského parlamentu",
-                          "5": "Volbě prezidenta republiky"}
+    election_type_dict = {
+        "1": "Volbách do Poslanecké sněmovny Parlamentu ČR",
+        "2": "Volbách do Senátu Parlamentu ČR",
+        "3": "Volbách do krajských zastupitelstev",
+        "4": "Volbách do Evropského parlamentu",
+        "5": "Volbě prezidenta republiky"
+    }
     while True:
         try:
             election_type_in = input(
-                """Pro ktery typ voleb?
-                [1]: Volby do Poslanecke snemovny
-                [2]: Volby do Senatu
-                [3]: Volby do krajskeho zastupitelstva
-                [4]: Volby do Evropskeho parlamentu
-                [5]: Volba prezidenta republiky
+            """Pro ktery typ voleb?
+            [1]: Volby do Poslanecke snemovny
+            [2]: Volby do Senatu
+            [3]: Volby do krajskeho zastupitelstva
+            [4]: Volby do Evropskeho parlamentu
+            [5]: Volba prezidenta republiky\n
                 """)
             if election_type_in == "":
                 el_type = blank_space
@@ -80,7 +87,7 @@ def delivery_type():
                 [1] převezmu osobně
                 [2] převezme jiná osoba s plnou mocí
                 [3] žádám doručit na trvalou adresu
-                [4] žádám doručit na jinou adresu
+                [4] žádám doručit na jinou adresu\n
                 """)
 
             if delivery_input == "4":
@@ -102,7 +109,7 @@ def delivery_type():
 def birth_date():
     while True:
         try:
-            bd = input("Vase datum narozeni: ") or blank_space
+            bd = input("Vase datum narozeni (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
             time.strptime(bd, "%d/%m/%Y")
         except ValueError:
             print("Datum je v chybnem formatu!")
@@ -115,7 +122,7 @@ def birth_date():
 def election_date():
     while True:
         try:
-            el_date = input("Termin konani voleb (Vlozte ve formatu dd/mm/rrrr): ") or blank_space
+            el_date = input("Termin konani voleb (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
             time.strptime(el_date, "%d/%m/%Y")
         except ValueError:
             print("Datum je v chybnem formatu!")
@@ -128,39 +135,40 @@ def election_date():
 #def form_review():
 
 def blank_form():
-    blank_text = f"""
-                    Obecní úřad 
+    blank_text = \
+        f"""
+        Obecní úřad 
 
-                    {blank_space} 
+        {blank_space} 
 
-                    {blank_space}
-
-
-                                        ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
-
-                          pro hlasovaní ve {blank_space}{blank_space} ve dnech {blank_space} 
+        {blank_space}
 
 
+        ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
 
-                   Žádám obecní úřad {blank_space}{blank_space} o vydání voličského průkazu pro hlasování ve {blank_space}{blank_space} 
-
-                   konaných ve dnech {blank_space}
-
-                   neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
-
-                   Jméno a příjmení žadatele
-                   (voliče):                  {blank_space}{blank_space} 
-
-                   Datum narození:            {blank_space}{blank_space}
-
-                   Trvalý pobyt:              {blank_space}{blank_space}
-
-                   K tomu sděluji, že voličský průkaz:
-
-                   {delivery_blank}
+        pro hlasovaní ve {blank_space}{blank_space} ve dnech {blank_space} 
 
 
-                                                               {blank_space}{blank_space}
+
+        Žádám obecní úřad {blank_space}{blank_space} o vydání voličského průkazu pro hlasování ve {blank_space}{blank_space} 
+
+        konaných ve dnech {blank_space}
+
+        neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
+
+        Jméno a příjmení žadatele
+        (voliče):                  {blank_space}{blank_space} 
+
+        Datum narození:            {blank_space}{blank_space}
+
+        Trvalý pobyt:              {blank_space}{blank_space}
+
+        K tomu sděluji, že voličský průkaz:
+
+        {delivery_blank}
+
+
+                                                        {blank_space}{blank_space}
                                                               podpis voliče - žadatele"""
 
     while True:
@@ -186,45 +194,46 @@ def blank_form():
 
 
 def req_form():
-    var_office = input("Adresa obecniho uradu v miste Vaseho volebniho okrsku: ") or blank_space
-    var_full_name = input("Vase cele jmeno: ") or blank_space
-    var_addr_of_res = input("Vase trvale bydliste: ") or blank_space
+    var_office = input("Adresa obecniho uradu v miste Vaseho volebniho okrsku:\n ") or blank_space
+    var_full_name = input("Vase cele jmeno:\n ") or blank_space
+    var_addr_of_res = input("Vase trvale bydliste:\n ") or blank_space
     var_election_type = election_type()
     var_election_date = election_date()
     var_birth_date = birth_date()
     var_delivery_type = delivery_type()
 
-    req_text = f"""
-                Obecní úřad 
+    req_text = \
+        f"""
+        Obecní úřad 
                 
-                {var_office} 
+        {var_office} 
                 
                 
                 
-                                  ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
-               
-                      pro hlasovaní ve {var_election_type} ve dnech {var_election_date} 
-               
-               
-               Žádám obecní úřad {var_office} o vydání voličského průkazu pro hlasování ve {var_election_type} 
-               
-               konaných ve dnech {var_election_date}
-               
-               neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
-               
-               Jméno a příjmení žadatele
-               (voliče):                  {var_full_name} 
-               
-               Datum narození:            {var_birth_date} 
-               
-               Trvalý pobyt:              {var_addr_of_res}
-               
-               K tomu sděluji, že voličský průkaz:
-               
-               {var_delivery_type}
+        ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
+              
+        pro hlasovaní ve {var_election_type} ve dnech {var_election_date} 
                
                
-                                                           {blank_space}
+        Žádám obecní úřad {var_office} o vydání voličského průkazu pro hlasování ve {var_election_type} 
+               
+        konaných ve dnech {var_election_date}
+               
+        neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
+               
+        Jméno a příjmení žadatele
+        (voliče):                  {var_full_name} 
+               
+        Datum narození:            {var_birth_date} 
+              
+        Trvalý pobyt:              {var_addr_of_res}
+               
+        K tomu sděluji, že voličský průkaz:
+               
+        {var_delivery_type}
+               
+               
+                                                {blank_space}{blank_space}
                                                       podpis voliče - žadatele"""
     review_menu_dict = {
         1: var_office,
@@ -252,7 +261,7 @@ def req_form():
                             [4]:{review_menu_dict[4]}
                             [5]:{review_menu_dict[5]}
                             [6]:{review_menu_dict[6]}
-                            [7]:{review_menu_dict[7]}
+                            [7]:{review_menu_dict[7]}\n
                             """))
                 if review_menu == 2:
                     print("Zadejte spravny udaj.\n")
@@ -273,32 +282,33 @@ def req_form():
                 else:
                     review_menu_dict[review_menu] = input("Zadejte spravny udaj.\n")
 
-                print(f"""
-                            Obecní úřad 
+                print(
+                    f"""
+                    Obecní úřad 
 
-                            {review_menu_dict[1]} 
-
-
-
-                                              ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
-
-                                  pro hlasovaní ve {review_menu_dict[2]} ve dnech {review_menu_dict[3]} 
+                    {review_menu_dict[1]} 
 
 
-                           Žádám obecní úřad {review_menu_dict[1]} o vydání voličského průkazu pro hlasování ve {review_menu_dict[2]} 
-                           konaných ve dne(ch) {review_menu_dict[3]}
-                           neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
 
-                           Jméno a příjmení žadatele
-                           (voliče):                  {review_menu_dict[4]} 
-                           Datum narození:            {review_menu_dict[5]} 
-                           Trvalý pobyt:              {review_menu_dict[6]}
+                    ŽÁDOST O VYDÁNÍ VOLEBNÍHO PRŮKAZU 
 
-                           K tomu sděluji, že voličský průkaz:
-                           {review_menu_dict[7]}
+                    pro hlasovaní ve {review_menu_dict[2]} ve dnech {review_menu_dict[3]} 
 
 
-                                                                       {blank_space}{blank_space}
+                    Žádám obecní úřad {review_menu_dict[1]} o vydání voličského průkazu pro hlasování ve {review_menu_dict[2]} 
+                    konaných ve dne(ch) {review_menu_dict[3]}
+                    neboť nebudu moci volit ve volebním okrsku, v jehož seznamu voličů jsem zapsán(a).
+
+                    Jméno a příjmení žadatele
+                    (voliče):                  {review_menu_dict[4]} 
+                    Datum narození:            {review_menu_dict[5]} 
+                    Trvalý pobyt:              {review_menu_dict[6]}
+
+                    K tomu sděluji, že voličský průkaz:
+                    {review_menu_dict[7]}
+
+
+                                                                {blank_space}{blank_space}
                                                                       podpis voliče - žadatele"""
 
                       )
@@ -327,3 +337,4 @@ try:
 except PermissionError as pr:
     print("Nastal problem!")
     print(pr)
+
