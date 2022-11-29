@@ -122,14 +122,19 @@ def birth_date():
 def election_date():
     while True:
         try:
-            el_date = input("Termin konani voleb (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
-            time.strptime(el_date, "%d/%m/%Y")
+            if input("Je termin konani voleb vicedenni? ") == 'n':
+                el_date = input("Termin konani voleb (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
+                time.strptime(el_date, "%d/%m/%Y")
+                return el_date
+            else:
+                el_date_start = input("Prvni den terminu konani voleb (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
+                time.strptime(el_date_start, "%d/%m/%Y")
+                el_date_last = input("Posledni den terminu konani voleb (Vlozte ve formatu dd/mm/rrrr):\n ") or blank_space
+                time.strptime(el_date_last, "%d/%m/%Y")
+                return f"{el_date_start} - {el_date_last}"
         except ValueError:
             print("Datum je v chybnem formatu!")
             continue
-        else:
-            break
-    return el_date
 
 
 #def form_review():
